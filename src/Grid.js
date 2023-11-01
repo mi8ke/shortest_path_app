@@ -6,12 +6,11 @@ function calculateDistance(point1, point2) {
 
     return Math.abs(x1 - x2) + Math.abs(y1 - y2);
 }
-
-function dijkstra(start, goal, grid) {
+function dijkstra(start, goal) {
     const visited = new Set();
     const queue = [[start, 0, [start]]];
 
-    while (queue.length > 0) {
+    while (queue && queue.length > 0) {
         queue.sort((a, b) => a[1] - b[1]);
 
         const [current, distance, path] = queue.shift();
@@ -29,9 +28,9 @@ function dijkstra(start, goal, grid) {
 
                     if (
                         next[0] >= 0 &&
-                        next[0] < grid.length &&
+                        next[0] < 10 &&
                         next[1] >= 0 &&
-                        next[1] < grid[0].length &&
+                        next[1] < 10 &&
                         !visited.has(next)
                     ) {
                         queue.push([next, distance + calculateDistance(current, next), [...path, next]]);
@@ -43,6 +42,7 @@ function dijkstra(start, goal, grid) {
 
     return null;
 }
+
 
 
 
