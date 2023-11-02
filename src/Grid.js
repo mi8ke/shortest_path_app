@@ -19,8 +19,8 @@ function dijkstra(start, goal) {
             return path;
         }
 
-        if (!visited.has(current)) {
-            visited.add(current);
+        if (!visited.has(current.toString())) {
+            visited.add(current.toString());
 
             for (let i = -1; i <= 1; i++) {
                 for (let j = -1; j <= 1; j++) {
@@ -85,7 +85,7 @@ const Grid = () => {
                         >
                             {start && start[0] === row && start[1] === col && 'S'}
                             {goal && goal[0] === row && goal[1] === col && 'G'}
-                            {path.find(point => point[0] === row && point[1] === col) && '*'}
+                            {path && path.find(point => point[0] === row && point[1] === col) && '*'}
                         </div>
                     ))}
                 </div>
