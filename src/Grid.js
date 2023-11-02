@@ -6,7 +6,7 @@ function calculateDistance(point1, point2) {
 
     return Math.abs(x1 - x2) + Math.abs(y1 - y2);
 }
-function dijkstra(start, goal) {
+function dijkstra(start, goal, obstacles) {
     const visited = new Set();
     const queue = [[start, 0, [start]]];
 
@@ -21,9 +21,13 @@ function dijkstra(start, goal) {
 
         if (!visited.has(current.toString())) {
             visited.add(current.toString());
+            // 周囲のセルの見ている。上下左右だけにするには
+            const directions = [[-1, 0], [1, 0], [0, -1], [0, 1]];
+            for (let [i, j] of directions) {
+                for (let [i, j] of directions) {
 
-            for (let i = -1; i <= 1; i++) {
-                for (let j = -1; j <= 1; j++) {
+            // for (let i = -1; i <= 1; i++) {
+            //     for (let j = -1; j <= 1; j++) {
                     const next = [current[0] + i, current[1] + j];
 
                     if (
@@ -31,7 +35,8 @@ function dijkstra(start, goal) {
                         next[0] < 10 &&
                         next[1] >= 0 &&
                         next[1] < 10 &&
-                        !visited.has(next)
+                        !visited.has(next.toString()) &&
+                        !obstacles.has(next.toString())
                     ) {
                         queue.push([next, distance + calculateDistance(current, next), [...path, next]]);
                     }
@@ -54,6 +59,8 @@ const Grid = () => {
     const [start, setStart] = useState(null);
     const [goal, setGoal] = useState(null);
     const [path, setPath] = useState([]);
+    const [obstacles, setObstacles] = useState(new Set());
+
 
     const handleClick = (row, col) => {
         if (!start) {
@@ -61,14 +68,18 @@ const Grid = () => {
         } else if (!goal) {
             setGoal([row, col]);
         } else {
-            setStart([row, col]);
-            setGoal(null);
+            if (obstacles.has(`${row},${col}`)) {
+                obstacles.delete(`${row},${col}`);
+            } else {
+                obstacles.add(`${row},${col}`);
+            }
+            setObstacles(new Set(obstacles));
         }
     };
 
     const handleCreatePathClick = () => {
         if (start && goal) {
-            const shortestPath = dijkstra(start, goal);
+            const shortestPath = dijkstra(start, goal, obstacles);
             setPath(shortestPath);
         }
     };
@@ -86,6 +97,7 @@ const Grid = () => {
                             {start && start[0] === row && start[1] === col && 'S'}
                             {goal && goal[0] === row && goal[1] === col && 'G'}
                             {path && path.find(point => point[0] === row && point[1] === col) && '*'}
+                            {obstacles.has(`${row},${col}`) && 'O'}
                         </div>
                     ))}
                 </div>
