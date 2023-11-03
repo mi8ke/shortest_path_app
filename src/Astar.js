@@ -115,7 +115,7 @@ const Astar = () => {
                     {cols.map((col) => (
                         <div
                             key={col}
-                            style={{ width: 20, height: 20, border: '1px solid black', textAlign: 'center' }}
+                            style={{ width: 30, height: 30, border: '1px solid black', textAlign: 'center' }}
                             onClick={() => handleClick(row, col)}
                         >
                             {start && start[0] === row && start[1] === col && 'S'}
@@ -127,7 +127,7 @@ const Astar = () => {
                 </div>
             ))}
             <button onClick={handleCreatePathClick}
-            style={{ fontSize: '12px', padding: '4px 8px', maxWidth: '200px', // ボタンの最大幅を設定
+            style={{ fontSize: '16px', padding: '4px 8px', maxWidth: '200px', // ボタンの最大幅を設定
             whiteSpace: 'nowrap' }}
             >最短経路を作成</button>
         </div>
