@@ -7,8 +7,8 @@ const App = () => {
     return (
         <div>
             <h1>Shortest Path Creator</h1>
-            {/* <ShortestPathApp /> */}
-            <Grid />
+            <ShortestPathApp />
+            {/* <Grid /> */}
             {/* <Astar /> */}
         </div>
     );

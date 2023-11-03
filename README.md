@@ -1,3 +1,9 @@
+# ダイクストラ法とA*アルゴリズムでの経路生成
+以下のコマンドで実行 \
+npm install \
+npm start
+
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
